@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using UserRegistration.DAL.Models;
+﻿using UserRegistration.DAL.Models;
 
 namespace UserRegistration.DAL.Repositories
 {
@@ -13,15 +12,16 @@ namespace UserRegistration.DAL.Repositories
 
         public UserEntity Create(string login, string email, string password)
         {
-            if (_applicationContext.Users.Any(u => u.Email == email))
-            {
-                throw new ValidationException("User with this email already exists") { Source = "Email" };
-            }
-
             var user = new UserEntity() { Login = login, Email = email, Password = password };
             _applicationContext.Users.Add(user);
             _applicationContext.SaveChanges();
 
+            return user;
+        }
+
+        public UserEntity GetUserByEmail(string email)
+        {
+            var user = _applicationContext.Users.FirstOrDefault(u => u.Email == email);
             return user;
         }
     }

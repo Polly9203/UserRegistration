@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using UserRegistration.BLL.Models;
 using UserRegistration.BLL.Models.Registration;
 using UserRegistration.BLL.Services;
 using UserRegistration.BLL.Validators;
@@ -34,6 +34,7 @@ namespace UserRegistration.PL.Controllers
 
                 return BadRequest(errors);
             }
+
             try
             {
                 var result = _registrationCommandHandler.CreateUser(command);
@@ -41,8 +42,14 @@ namespace UserRegistration.PL.Controllers
             }
             catch (ValidationException ex)
             {
-                var error = new ValidationErrorModel() { Field = ex.Source, Message = ex.Message };
-                return BadRequest(error);
+                var error = new ValidationFailure(ex.Source, ex.Message);
+                var errorOutput = new
+                {
+                    Field = error.PropertyName,
+                    Message = error.ErrorMessage
+                };
+
+                return BadRequest(errorOutput);
             }
         }
     }

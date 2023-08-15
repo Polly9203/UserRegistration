@@ -5,5 +5,6 @@ namespace UserRegistration.DAL.Repositories
     public interface IRegistrationRepository
     {
         UserEntity Create(string login, string email, string password);
+        UserEntity GetUserByEmail(string email);
     }
 }

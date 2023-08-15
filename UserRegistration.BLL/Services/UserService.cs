@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using UserRegistration.BLL.Models.Registration;
 using UserRegistration.DAL.Models;
 using UserRegistration.DAL.Repositories;
@@ -21,6 +22,11 @@ namespace UserRegistration.BLL.Services
 
         public RegistrationResultModel CreateUser(RegistrationModel command)
         {
+            if (_registrationRepository.GetUserByEmail(command.Email) != null)
+            {
+                throw new ValidationException("User with this email already exists") { Source = "Email" };
+            }
+
             var hashedPassword = _passwordHasher.HashPassword(null, command.Password);
             var result = _registrationRepository.Create(command.Login, command.Email, hashedPassword);
 
