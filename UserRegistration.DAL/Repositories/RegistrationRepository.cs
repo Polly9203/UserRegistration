@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using UserRegistration.DAL.Models;
+﻿using UserRegistration.DAL.Models;
 
 namespace UserRegistration.DAL.Repositories
 {
@@ -11,17 +10,18 @@ namespace UserRegistration.DAL.Repositories
             _applicationContext = applicationContext;
         }
 
-        public UserModel Registrate(string login, string email, string password)
+        public UserEntity Create(string login, string email, string password)
         {
-            if (_applicationContext.Users.Any(u => u.Email == email))
-            {
-                throw new DbUpdateException("User with this email already exists.");
-            }
-
-            var user = new UserModel() { Login = login, Email = email, Password = password };
+            var user = new UserEntity() { Login = login, Email = email, Password = password };
             _applicationContext.Users.Add(user);
             _applicationContext.SaveChanges();
 
+            return user;
+        }
+
+        public UserEntity GetUserByEmail(string email)
+        {
+            var user = _applicationContext.Users.FirstOrDefault(u => u.Email == email);
             return user;
         }
     }

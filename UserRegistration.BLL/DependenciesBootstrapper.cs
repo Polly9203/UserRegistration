@@ -1,7 +1,8 @@
-﻿using FluentValidation;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-using UserRegistration.BLL.Registration.Commands;
+using UserRegistration.BLL.MappingProfiles;
+using UserRegistration.BLL.Services;
+using UserRegistration.DAL.Models;
 
 namespace UserRegistration.BLL
 {
@@ -9,9 +10,16 @@ namespace UserRegistration.BLL
     {
         public static IServiceCollection AddUserRegistrationBLL(this IServiceCollection services)
         {
-            services.AddSingleton(AutoMapperInitialization.CreateMapper());
-            services.AddTransient<IRegistrationCommandHandler, RegistrationCommandHandler>();
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AllowNullCollections = true;
+                cfg.AllowNullDestinationValues = true;
+
+                cfg.AddProfile<UserProfile>();
+            });
+
+            services.AddTransient<IUserService, UserService>();
+            services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntity>>();
 
             return services;
         }
