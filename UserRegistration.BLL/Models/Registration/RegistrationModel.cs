@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace UserRegistration.BLL.Registration.Models
+namespace UserRegistration.BLL.Models.Registration
 {
-    public class RegistrationCommand
+    public class RegistrationModel
     {
         [JsonPropertyName("login")]
         public string Login { get; set; }

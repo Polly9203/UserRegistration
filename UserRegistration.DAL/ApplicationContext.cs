@@ -10,6 +10,6 @@ namespace UserRegistration.DAL
             Database.EnsureCreated();
         }
 
-        public DbSet<UserModel> Users { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
     }
 }

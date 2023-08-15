@@ -1,3 +1,5 @@
+using FluentValidation;
+using System.Reflection;
 using UserRegistration.BLL;
 using UserRegistration.DAL;
 
@@ -9,6 +11,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddUserRegistrationBLL();
 builder.Services.AddUserRegistrationDAL(builder.Configuration);
+
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 

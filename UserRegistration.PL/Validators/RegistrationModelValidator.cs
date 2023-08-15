@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using UserRegistration.BLL.Registration.Models;
+using UserRegistration.BLL.Models.Registration;
 
-namespace UserRegistration.BLL.Registration
+namespace UserRegistration.BLL.Validators
 {
-    public class RegistrationCommandValidator : AbstractValidator<RegistrationCommand>
+    public class RegistrationModelValidator : AbstractValidator<RegistrationModel>
     {
-        public RegistrationCommandValidator()
+        public RegistrationModelValidator()
         {
             RuleFor(user => user.Login).NotEmpty().WithMessage("Login cannot be empty");
             RuleFor(user => user.Email).NotEmpty().EmailAddress().WithMessage("Invalid email address");
