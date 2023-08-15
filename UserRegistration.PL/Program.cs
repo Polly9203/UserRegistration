@@ -1,6 +1,7 @@
 using FluentValidation;
 using System.Reflection;
 using UserRegistration.BLL;
+using UserRegistration.BLL.Models;
 using UserRegistration.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,8 @@ builder.Services.AddUserRegistrationBLL();
 builder.Services.AddUserRegistrationDAL(builder.Configuration);
 
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+builder.Services.Configure<EmailValidationSettings>(builder.Configuration.GetSection("EmailValidationSettings"));
 
 var app = builder.Build();
 
