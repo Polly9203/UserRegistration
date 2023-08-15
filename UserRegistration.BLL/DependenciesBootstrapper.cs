@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using UserRegistration.BLL.MappingProfiles;
 using UserRegistration.BLL.Services;
+using UserRegistration.DAL.Models;
 
 namespace UserRegistration.BLL
 {
@@ -17,6 +19,7 @@ namespace UserRegistration.BLL
             });
 
             services.AddTransient<IUserService, UserService>();
+            services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntity>>();
 
             return services;
         }

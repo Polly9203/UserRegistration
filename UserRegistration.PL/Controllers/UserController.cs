@@ -41,7 +41,7 @@ namespace UserRegistration.PL.Controllers
             }
             catch (ValidationException ex)
             {
-                var error = new ValidationErrorModel() {Field = ex.Source, Message = ex.Message};
+                var error = new ValidationErrorModel() { Field = ex.Source, Message = ex.Message };
                 return BadRequest(error);
             }
         }

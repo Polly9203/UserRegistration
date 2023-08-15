@@ -15,7 +15,7 @@ namespace UserRegistration.DAL.Repositories
         {
             if (_applicationContext.Users.Any(u => u.Email == email))
             {
-                throw new ValidationException("User with this email already exists"){Source = "Email"};
+                throw new ValidationException("User with this email already exists") { Source = "Email" };
             }
 
             var user = new UserEntity() { Login = login, Email = email, Password = password };
